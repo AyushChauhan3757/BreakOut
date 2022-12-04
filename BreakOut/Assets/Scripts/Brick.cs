@@ -29,7 +29,6 @@ public class Brick : MonoBehaviour
         {
             gameObject.GetComponent<BoxCollider>().enabled = false;
             _rb.velocity = Vector3.down * 5;
-            transform.position = transform.position + new Vector3(0, 0, -2);
             if (transform.position.y <= -20)
             {
                 Destroy(gameObject);
