@@ -1,19 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
     public int hits = 1;
     public int points = 100;
-    //Rigidbody _rb;
     public Vector3 rotator;
+    public Material hitmaterial;
+
+    Material _defaultmaterial;
+    Renderer _renderer;
 
     void Start()
     {
-        //_rb = GetComponent<Rigidbody>();
+        transform.Rotate(rotator *(transform.position.x + transform.position.y) * 0.1f);
+        _renderer = GetComponent<Renderer>();
+        _defaultmaterial= GetComponent<Renderer>().sharedMaterial;
     }
 
     
@@ -22,21 +26,22 @@ public class Brick : MonoBehaviour
         transform.Rotate(rotator * Time.deltaTime);
     }
 
-    private async void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Ball")
         {
             hits--;
-        }
-        //Score
-        if(hits<=0)
-        {
-            gameObject.GetComponent<BoxCollider>().enabled = false;
-            transform.position += Vector3.down *Time.deltaTime * 50;
-            await Task.Delay(800);
-            Destroy(gameObject);
-            
-            
-        }
+            //Score
+            if(hits<=0)
+            {
+                Destroy(gameObject);
+            }
+            _renderer.sharedMaterial = hitmaterial;
+            Invoke("RestoreMaterial", 0.05f);
+         }
+    }
+    void RestoreMaterial()
+    {
+        _renderer.sharedMaterial = _defaultmaterial;
     }
 }
