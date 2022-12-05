@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 674cbab5d476890489cfa5b384bfcb79
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - BallPrefab: {fileID: 9186944731495922183, guid: dd54af3fccd5fc341b4a16fabd35b3b1, type: 3}
+  - PlayerPrefab: {fileID: 7174487679386349262, guid: a67dd4c8682d1c74b9a88cba9ba5eab8, type: 3}
+  - scoreText: {fileID: 9057677268085835052, guid: 7c1721fa7751dae43b4fcbba04ace5bf, type: 3}
+  - ballsText: {fileID: 6970122490084847854, guid: 7fb3c6d442de99f40b1bcbf09b1fd85d, type: 3}
+  - levelText: {fileID: 7017058595651480343, guid: 1bba8e1a40227c240bfceceea51ae826, type: 3}
+  - panelMenu: {fileID: 6504227565029189913, guid: 1447d7afb29b63d4ea73376fce62b982, type: 3}
+  - panelPlay: {fileID: 2679729845910254501, guid: 3166254b4e1069f498bb103bde7fc59b, type: 3}
+  - panelLevelCcomplated: {fileID: 3126150612268520704, guid: c84a40f4faa181f4793db6c923dffd1d, type: 3}
+  - panelGameOver: {fileID: 2472516689320360897, guid: d6897ebeeff9c2e41882e8f1a051e9d9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
