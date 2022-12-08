@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject panelMenu;
     public GameObject panelPlay;
-    public GameObject panelLevelCcomplated;
+    public GameObject panelLevelCompleted;
     public GameObject panelGameOver;
 
     public enum State { MENU, INIT, PLAY, LEVELCOMPLETED, LOADLEVEL, GAMEOVER }
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
                 panelMenu.SetActive(true);
                 break;
             case State.INIT:
+                panelPlay.SetActive(true);
                 break;
             case State.PLAY:
                 break;
