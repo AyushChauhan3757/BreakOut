@@ -31,9 +31,9 @@ public class Brick : MonoBehaviour
         if (collision.gameObject.name == "Ball")
         {
             hits--;
-            //Score
             if(hits<=0)
             {
+                GameManager.Instance.Score += points;
                 Destroy(gameObject);
             }
             _renderer.sharedMaterial = hitmaterial;
