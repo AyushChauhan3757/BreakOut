@@ -128,13 +128,19 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case State.MENU:
+                Cursor.visible = true;
+                highscoreText.text = "HIGHSCORE : " + PlayerPrefs.GetInt("highscore");
                 panelMenu.SetActive(true);
                 break;
             case State.INIT:
                 panelPlay.SetActive(true);
                 Score = 0;
                 Level = 0;
-                Balls = 1;
+                Balls = 3;
+                if(_currentlevel!= null) 
+                {
+                    Destroy( _currentlevel );
+                }
                 _currentplayer = Instantiate(PlayerPrefab);
                 SwitchState(State.LOADLEVEL);
                 break;
@@ -159,16 +165,20 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case State.GAMEOVER:
+                if (Score > PlayerPrefs.GetInt("highscore"))
+                {
+                    PlayerPrefs.SetInt("highscore", Score);
+                }
                 panelGameOver.SetActive(true);
                 break;
             case State.GAMECOMPLETED:
                 Cursor.visible = true;
                 Destroy(_currentplayer);
-                panelGameCompleted.SetActive(true);
                 if (Score > PlayerPrefs.GetInt("highscore"))
                 {
                     PlayerPrefs.SetInt("highscore", Score);
                 }
+                panelGameCompleted.SetActive(true);
                 break;
         }
     }
