@@ -28,8 +28,6 @@ public class Brick : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Ball")
-        {
             hits--;
             if(hits<=0)
             {
@@ -38,7 +36,6 @@ public class Brick : MonoBehaviour
             }
             _renderer.sharedMaterial = hitmaterial;
             Invoke("RestoreMaterial", 0.05f);
-         }
     }
     void RestoreMaterial()
     {

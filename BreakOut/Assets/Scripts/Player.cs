@@ -15,6 +15,6 @@ public class Player : MonoBehaviour
     
     void FixedUpdate()
     {
-        _rb.MovePosition(new Vector3(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0, 50)).x, -18, 0));
+            _rb.MovePosition(new Vector3(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0, 50)).x, -18, 0));
     }
 }

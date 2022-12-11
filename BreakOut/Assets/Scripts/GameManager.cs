@@ -24,6 +24,17 @@ public class GameManager : MonoBehaviour
     {
         SwitchState(State.INIT);
     }
+    public void NextClicked()
+    {
+        SwitchState(State.LOADLEVEL);
+        Cursor.visible = false;
+    }
+    public void RestartClicked()
+    {
+        Level--;
+        SwitchState(State.LOADLEVEL);
+        Cursor.visible = false;
+    }
 
     private int _score;
     public int Score
@@ -39,13 +50,21 @@ public class GameManager : MonoBehaviour
     public int Balls
     {
         get { return _balls; }
-        set { _balls = value; }
+        set 
+        { 
+            _balls = value;
+            ballsText.text = "BALLS : " + _balls;
+        }
     }
     private int _level;
     public int Level
     {
         get { return _level; }
-        set { _level = value; }
+        set 
+        { 
+            _level = value;
+            levelText.text = "LEVEL : " + _level;
+        }
     }
 
     public enum State { MENU, INIT, PLAY, LEVELCOMPLETED, LOADLEVEL, GAMEOVER }
@@ -93,6 +112,10 @@ public class GameManager : MonoBehaviour
             case State.PLAY:
                 break;
             case State.LEVELCOMPLETED:
+                Destroy(_currentball);
+                Destroy(_currentlevel);
+                Level++;
+                Cursor.visible = true;
                 panelLevelCompleted.SetActive(true);
                 break;
             case State.LOADLEVEL:
@@ -123,11 +146,18 @@ public class GameManager : MonoBehaviour
             case State.PLAY:
                 if(_currentball == null && Balls > 0)
                 {
+                    if(Balls > 0)
+                    {
                         _currentball = Instantiate(BallPrefab);
-                }
-                else
+                    }
+                    else 
+                    {
+                        SwitchState(State.GAMEOVER);
+                    }
+                }  
+                if(_currentlevel != null &&_currentlevel.transform.childCount == 0 && !isSwitchingState) 
                 {
-                    SwitchState(State.GAMEOVER);
+                    SwitchState(State.LEVELCOMPLETED);
                 }
                 break;
             case State.LEVELCOMPLETED:
@@ -135,6 +165,10 @@ public class GameManager : MonoBehaviour
             case State.LOADLEVEL:
                 break;
             case State.GAMEOVER:
+                if(Input.anyKeyDown)
+                {
+                    SwitchState(State.MENU);
+                }
                 break;
         }
     }
