@@ -10,11 +10,14 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public Text ballsText;
     public Text levelText;
+    public Text highscoreText;
 
     public GameObject panelMenu;
     public GameObject panelPlay;
     public GameObject panelLevelCompleted;
     public GameObject panelGameOver;
+    public GameObject panelOptions;
+    public GameObject panelGameCompleted;
 
     public GameObject[] levels;
 
@@ -23,6 +26,10 @@ public class GameManager : MonoBehaviour
     public void PlayClicked()
     {
         SwitchState(State.INIT);
+    }
+    public void QuitClicked()
+    {
+        Application.Quit();
     }
     public void NextClicked()
     {
@@ -35,6 +42,27 @@ public class GameManager : MonoBehaviour
         SwitchState(State.LOADLEVEL);
         Cursor.visible = false;
     }
+    public void Restart2Clicked()
+    {
+        Balls++;
+        SwitchState(State.LOADLEVEL);
+        Cursor.visible = false;
+    }
+    public void MenuClicked()
+    {
+        SwitchState(State.MENU);
+    }
+    public void OptionsClicked()
+    {
+        panelMenu.SetActive(false);
+        panelOptions.SetActive(true);
+    }
+    public void BackClicked()
+    {
+        panelOptions.SetActive(false);
+        panelMenu.SetActive(true);
+    }
+
 
     private int _score;
     public int Score
@@ -67,10 +95,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public enum State { MENU, INIT, PLAY, LEVELCOMPLETED, LOADLEVEL, GAMEOVER }
+    public enum State { MENU, INIT, PLAY, LEVELCOMPLETED, LOADLEVEL, GAMEOVER, GAMECOMPLETED }
     State _state;
     GameObject _currentball;
     GameObject _currentlevel;
+    GameObject _currentplayer;
     bool isSwitchingState;
     
     void Start()
@@ -105,8 +134,8 @@ public class GameManager : MonoBehaviour
                 panelPlay.SetActive(true);
                 Score = 0;
                 Level = 0;
-                Balls = 3;
-                Instantiate(PlayerPrefab);
+                Balls = 1;
+                _currentplayer = Instantiate(PlayerPrefab);
                 SwitchState(State.LOADLEVEL);
                 break;
             case State.PLAY:
@@ -121,7 +150,7 @@ public class GameManager : MonoBehaviour
             case State.LOADLEVEL:
                 if(Level >= levels.Length)
                 {
-                    SwitchState(State.GAMEOVER);
+                    SwitchState(State.GAMECOMPLETED);
                 }
                 else
                 {
@@ -131,6 +160,15 @@ public class GameManager : MonoBehaviour
                 break;
             case State.GAMEOVER:
                 panelGameOver.SetActive(true);
+                break;
+            case State.GAMECOMPLETED:
+                Cursor.visible = true;
+                Destroy(_currentplayer);
+                panelGameCompleted.SetActive(true);
+                if (Score > PlayerPrefs.GetInt("highscore"))
+                {
+                    PlayerPrefs.SetInt("highscore", Score);
+                }
                 break;
         }
     }
@@ -144,7 +182,7 @@ public class GameManager : MonoBehaviour
             case State.INIT:
                 break;
             case State.PLAY:
-                if(_currentball == null && Balls > 0)
+                if(_currentball == null)
                 {
                     if(Balls > 0)
                     {
@@ -165,10 +203,8 @@ public class GameManager : MonoBehaviour
             case State.LOADLEVEL:
                 break;
             case State.GAMEOVER:
-                if(Input.anyKeyDown)
-                {
-                    SwitchState(State.MENU);
-                }
+                break;
+            case State.GAMECOMPLETED:
                 break;
         }
     }
@@ -192,6 +228,10 @@ public class GameManager : MonoBehaviour
             case State.GAMEOVER:
                 panelPlay.SetActive(false);
                 panelGameOver.SetActive(false);
+                break;
+            case State.GAMECOMPLETED:
+                panelPlay.SetActive(false);
+                panelGameCompleted.SetActive(false);
                 break;
         }
     }
