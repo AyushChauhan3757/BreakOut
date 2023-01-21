@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public GameObject panelGameCompleted;
 
     public GameObject[] levels;
+    public AudioSource Music;
+    public Slider SlideBar; 
 
     public static GameManager Instance { get; private set; }
 
@@ -185,6 +187,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        
         switch (_state)
         {
             case State.MENU:
@@ -244,5 +247,9 @@ public class GameManager : MonoBehaviour
                 panelGameCompleted.SetActive(false);
                 break;
         }
+    }
+    void SetVolume(float slidervalue)
+    {
+        Music.volume = Mathf.Log10(slidervalue) * 20;
     }
 }

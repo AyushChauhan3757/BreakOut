@@ -9,6 +9,7 @@ public class Brick : MonoBehaviour
     public int points = 100;
     public Vector3 rotator;
     public Material hitmaterial;
+    public Material[] MaterialList = new Material[5];
 
     Material _defaultmaterial;
     Renderer _renderer;
@@ -39,6 +40,6 @@ public class Brick : MonoBehaviour
     }
     void RestoreMaterial()
     {
-        _renderer.sharedMaterial = _defaultmaterial;
+        _renderer.sharedMaterial =MaterialList[hits-1];
     }
 }
