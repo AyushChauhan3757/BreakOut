@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     Rigidbody _rb;
     Vector3 _velocity;
     Renderer _renderer;
+    public AudioSource hitSound;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -34,5 +35,6 @@ public class Ball : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         _rb.velocity = Vector3.Reflect(_velocity, collision.contacts[0].normal);
+        hitSound.Play();
     }
 }
